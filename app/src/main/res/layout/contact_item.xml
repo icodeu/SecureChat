@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/id_ivPhoto"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:id="@+id/id_tvName"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/id_ivPhoto"
+        android:layout_toEndOf="@+id/id_ivPhoto" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="last Message"
+        android:id="@+id/id_tvLastMessage"
+        android:layout_alignBottom="@+id/id_ivPhoto"
+        android:layout_toRightOf="@+id/id_ivPhoto"
+        android:layout_toEndOf="@+id/id_ivPhoto" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="time"
+        android:id="@+id/id_tvTime"
+        android:layout_below="@+id/id_tvName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp" />
+
+
+</RelativeLayout>

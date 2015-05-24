@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/id_btnAccept"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="接受会话邀请" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.icodeyou.securechat.contactslist.PinnedSectionListView
+            android:id="@+id/lv_contacts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </com.icodeyou.securechat.contactslist.PinnedSectionListView>
+
+        <com.icodeyou.securechat.contactslist.LetterBar
+            android:id="@+id/lb"
+            android:layout_width="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="match_parent" >
+        </com.icodeyou.securechat.contactslist.LetterBar>
+
+        <TextView
+            android:id="@+id/tv_overlay"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:background="#565656"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:textSize="36sp" />
+    </RelativeLayout>
+
+</LinearLayout>

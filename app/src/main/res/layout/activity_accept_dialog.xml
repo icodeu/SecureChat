@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    tools:context="com.icodeyou.securechat.AcceptDialogActivity">
+
+    <TextView
+        android:id="@+id/id_textView"
+        android:text="请输入随机数"
+        android:textSize="20dp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/id_etRam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id_textView"
+        android:hint="会话邀请码" />
+
+    <Button
+        android:id="@+id/id_btnOK"
+        android:layout_below="@id/id_etRam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="确定" />
+
+</RelativeLayout>
