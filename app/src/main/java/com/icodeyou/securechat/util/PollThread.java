@@ -78,7 +78,7 @@ public class PollThread extends Thread {
                 WantToChatManager.getInstance().addContact(contact);
                 isRefresh = true;
             }
-            listener.onSuccess(isRefresh);
+            listener.onSuccess(true);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -79,6 +79,12 @@ public class InitCryptAcceptThread extends Thread {
             DebugUtil.print("InitCryptAcceptThread " + BytesToHex.fromBytesToHex(CryptManager.getInstance().getSecret()));
 
             handler.sendEmptyMessage(0);
+
+            // 关闭连接 释放资源
+            ois.close();
+            oos.close();
+            socket.close();
+            socket = null;
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -79,9 +79,10 @@ public class WantToChatAdapter extends BaseAdapter{
                     intent.putExtra(FriendFragment.CONTACT, contact);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(intent);
+                    // 从 WantChatManager 中删除对应记录
+                    WantToChatManager.getInstance().delContact(contact.getNumber());
                 }
-                // 从 WantChatManager 中删除对应记录
-                WantToChatManager.getInstance().delContact(contact.getNumber());
+
             }
         });
 

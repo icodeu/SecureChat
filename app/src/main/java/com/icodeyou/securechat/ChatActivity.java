@@ -77,8 +77,6 @@ public class ChatActivity extends ActionBarActivity {
     ServerSocket serverSocket = null;
     // 负责发消息的Socket
     Socket socket = null;
-    BufferedWriter writer = null;
-    BufferedReader reader = null;
 
     ObjectOutputStream oos = null;
     ObjectInputStream ois = null;
@@ -439,4 +437,44 @@ public class ChatActivity extends ActionBarActivity {
         mEtMessage.setVisibility(View.VISIBLE);
     }
 
+    /*
+     * 释放之前连接的资源
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DebugUtil.print("ChatActivity 释放资源开始");
+        try{
+            if (oos != null)
+                oos.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            if (ois != null)
+                ois.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            if (socket != null){
+                socket.close();
+                socket = null;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            if (serverSocket != null){
+                serverSocket.close();
+                serverSocket = null;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        DebugUtil.print("ChatActivity 释放资源完成");
+    }
 }
