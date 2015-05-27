@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * 各种我还不知道轮询什么的轮询
+ * 轮询是否有好友请求 是否有会话请求
  */
 public class PollThread extends Thread {
 
@@ -15,7 +15,9 @@ public class PollThread extends Thread {
 
     private PollCallBackListener listener;
 
-    public interface PollCallBackListener{
+    private static final int POLL_TIME = 3000;
+
+    public interface PollCallBackListener {
         public void onSuccess(boolean isRefresh);
     }
 
@@ -32,11 +34,12 @@ public class PollThread extends Thread {
                     public void onSuccess(String info) {
                         handleJSON(info);
                     }
+
                     @Override
                     public void onFail(String info) {
                     }
                 });
-                Thread.sleep(3000);
+                Thread.sleep(POLL_TIME);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -50,9 +53,9 @@ public class PollThread extends Thread {
             JSONArray wantChatArray = jsonObject.getJSONArray("sendMyIP");
             boolean isRefresh = false;
             // 循环addContactArray数组
-            for (int i=0;i<addContactArray.length();i++){
+            for (int i = 0; i < addContactArray.length(); i++) {
                 JSONObject object = addContactArray.getJSONObject(i);
-                if (object.getInt("addreq") == 0){
+                if (object.getInt("addreq") == 0) {
                     break;
                 }
                 String num = object.getString("num");
@@ -62,9 +65,9 @@ public class PollThread extends Thread {
             }
 
             // 循环wantChatArray数组
-            for (int i=0;i<wantChatArray.length();i++){
+            for (int i = 0; i < wantChatArray.length(); i++) {
                 JSONObject object = wantChatArray.getJSONObject(i);
-                if (object.getInt("conreq") == 0){
+                if (object.getInt("conreq") == 0) {
                     break;
                 }
                 String ram = object.getString("ram");
@@ -76,7 +79,7 @@ public class PollThread extends Thread {
                 isRefresh = true;
             }
             listener.onSuccess(isRefresh);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
