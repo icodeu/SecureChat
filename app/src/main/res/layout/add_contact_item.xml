@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextView
         android:id="@+id/id_ivPhoto"
         android:layout_width="50dp"
@@ -12,15 +11,16 @@
         android:gravity="center"
         android:textSize="30sp"
         android:background="#CCCCFF"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="15dp" />
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Name"
-        android:textColor="#000000"
         android:id="@+id/id_tvName"
         android:layout_marginLeft="20dp"
+        android:textColor="#000000"
         android:layout_toRightOf="@+id/id_ivPhoto"
         android:layout_toEndOf="@+id/id_ivPhoto"
         android:layout_alignTop="@+id/id_ivPhoto" />
@@ -43,6 +43,30 @@
         android:layout_below="@+id/id_ivPhoto"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp" />
+
+    <Button
+        android:id="@+id/id_btnRefuse"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text="拒绝"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/style_refuse_button"
+        android:textColor="#ffffff"
+        android:layout_alignTop="@+id/id_btnAccept"
+        android:layout_alignParentRight="true" />
+
+    <Button
+        android:id="@+id/id_btnAccept"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text="接受"
+        android:background="@drawable/style_accept_button"
+        android:textColor="#ffffff"
+        android:layout_alignBottom="@+id/id_tvPhone"
+        android:layout_toLeftOf="@id/id_btnRefuse"
+        android:layout_marginLeft="60dp"
         android:layout_marginRight="15dp" />
 
 

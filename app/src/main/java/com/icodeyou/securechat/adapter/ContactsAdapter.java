@@ -1,6 +1,7 @@
 package com.icodeyou.securechat.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +20,9 @@ public class ContactsAdapter extends BaseAdapter{
 
     private Context mContext;
     private ArrayList<Contact> mContacts;
-    private Handler handler;
 
-    public ContactsAdapter(Context mContext, Handler handler) {
+    public ContactsAdapter(Context mContext) {
         this.mContext = mContext;
-        this.handler = handler;
         mContacts = ContactManager.getInstance().getInfos();
     }
 
@@ -49,6 +48,12 @@ public class ContactsAdapter extends BaseAdapter{
             convertView = LayoutInflater.from(mContext).inflate(R.layout.contact_item, parent, false);
         TextView tvName = (TextView) convertView.findViewById(R.id.id_tvName);
         tvName.setText(contact.getName());
+        TextView tvPhoto = (TextView) convertView.findViewById(R.id.id_ivPhoto);
+        String firstWord = ((Contact) getItem(position)).getName().substring(0, 1);
+        tvPhoto.setText(firstWord);
+        tvPhoto.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        TextView tvPhone = (TextView) convertView.findViewById(R.id.id_tvPhone);
+        tvPhone.setText(contact.getNumber());
         return convertView;
     }
 }

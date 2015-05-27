@@ -1,6 +1,7 @@
 package com.icodeyou.securechat;
 
 import android.app.Activity;
+import android.app.Application;
 import android.os.Bundle;
 import android.os.Debug;
 import android.os.Handler;
@@ -26,6 +27,8 @@ import com.icodeyou.securechat.util.IPManager;
 import com.icodeyou.securechat.util.InitCryptAcceptThread;
 import com.icodeyou.securechat.util.InitCryptSponsorThread;
 import com.icodeyou.securechat.util.MessageUtil;
+import com.icodeyou.securechat.util.RingtoneVibratorManager;
+import com.icodeyou.securechat.util.SettingManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -100,10 +103,16 @@ public class ChatActivity extends ActionBarActivity {
             mChatDatas.add(new ChatData(message, ChatData.RECEIVER));
             mChatAdapter.notifyDataSetChanged();
 
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss");
-            Date curDate = new Date(System.currentTimeMillis());
-            String time = formatter.format(curDate);
-            new DAOImp(ChatActivity.this).insertChat(new ChatData(message, ChatData.RECEIVER, mContact.getNumber(), time));
+            if (SettingManager.getInstance(getApplicationContext()).isSaveChatHistory()){
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss");
+                Date curDate = new Date(System.currentTimeMillis());
+                String time = formatter.format(curDate);
+                new DAOImp(ChatActivity.this).insertChat(new ChatData(message, ChatData.RECEIVER, mContact.getNumber(), time));
+            }
+
+            //播放声音与震动(开关在manager中)
+            RingtoneVibratorManager.playMusic(ChatActivity.this);
+            RingtoneVibratorManager.vibration(ChatActivity.this);
         }
     };
 
@@ -117,10 +126,12 @@ public class ChatActivity extends ActionBarActivity {
             mChatDatas.add(new ChatData(message, ChatData.SENDER));
             mChatAdapter.notifyDataSetChanged();
 
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss");
-            Date curDate = new Date(System.currentTimeMillis());
-            String time = formatter.format(curDate);
-            new DAOImp(ChatActivity.this).insertChat(new ChatData(message, ChatData.SENDER, mContact.getNumber(), time));
+            if (SettingManager.getInstance(getApplicationContext()).isSaveChatHistory()) {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss");
+                Date curDate = new Date(System.currentTimeMillis());
+                String time = formatter.format(curDate);
+                new DAOImp(ChatActivity.this).insertChat(new ChatData(message, ChatData.SENDER, mContact.getNumber(), time));
+            }
         }
     };
 
@@ -145,7 +156,7 @@ public class ChatActivity extends ActionBarActivity {
         else{
             // todo 被邀请者初始化连接
             DebugUtil.print("ChatActivity " + "我是受邀请者");
-            mRam = getIntent().getStringExtra(AcceptDialogActivity.RAM);
+            mRam = getIntent().getStringExtra(HomeActivity.RAM);
             initConnectionAccept();
         }
 
@@ -267,7 +278,7 @@ public class ChatActivity extends ActionBarActivity {
             @Override
             public void onSuccess(String info) {
                 changeInitStatus();
-                setTitle("建立连接成功");
+//                setTitle("建立连接成功");
                 DebugUtil.print("ChatActivity " + info);
                 getIPFromJson(info);
                 // 523 加密通信初始化密钥开始！！！
@@ -303,20 +314,22 @@ public class ChatActivity extends ActionBarActivity {
         }
         DebugUtil.print("status " + status);
         DebugUtil.print("ip " + ip);
-        mContact = new Contact(ip);
+        mContact.setIp(ip);
+//        mContact = new Contact(ip);
         // todo 暂时先设置一个号码 方便数据库存储 不然报空指针异常
-        mContact.setNumber("00000000000");
+        // mContact.setNumber("00000000000");
     }
     // 被邀请者 方法结束
 
 
     // 以下为 发起者 方法
     private void initConnection() {
-        HttpUtil.getInstance().sendMyIP(IPManager.getInstance().getMyIP(), new HttpUtil.HttpCallBackListener() {
+        HttpUtil.getInstance().sendMyIP(IPManager.getInstance().getMyIP(), MyApplication.getMyPhone(), mContact.getNumber(), new HttpUtil.HttpCallBackListener() {
             @Override
             public void onSuccess(String info) {
                 mBtnSend.setText("建立连接成功！");
                 DebugUtil.print("ChatActivity " + info);
+                DebugUtil.print("sponsor:" + MyApplication.getMyPhone() + " acceptor:" + mContact.getNumber());
                 getRamFromJson(info);
             }
 

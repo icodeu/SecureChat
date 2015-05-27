@@ -4,20 +4,20 @@ import com.icodeyou.securechat.model.Contact;
 
 import java.util.ArrayList;
 
-public class ContactManager {
+public class NewFriendManager {
 
-    private static ContactManager contactManager = null;
+    private static NewFriendManager manager = null;
     private ArrayList<Contact> mInfos;
 
-    private ContactManager(){
+    private NewFriendManager(){
         mInfos = new ArrayList<Contact>();
     }
 
-    public static ContactManager getInstance(){
-        if (contactManager == null){
-            contactManager = new ContactManager();
+    public static NewFriendManager getInstance(){
+        if (manager == null){
+            manager = new NewFriendManager();
         }
-        return contactManager;
+        return manager;
     }
 
     public ArrayList<Contact> getInfos(){
@@ -30,4 +30,12 @@ public class ContactManager {
                 return;
         mInfos.add(contact);
     }
+
+    public void delContact(String phone){
+        for (Contact contact : mInfos){
+            if (contact.getNumber().equals(phone))
+                mInfos.remove(contact);
+        }
+    }
+
 }

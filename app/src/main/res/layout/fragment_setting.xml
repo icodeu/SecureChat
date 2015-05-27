@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context="com.icodeyou.securechatdemo.SettingFragment">
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:background="#282828"-->
+        <!--android:text="设置"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:textColor="#ffffff"-->
+        <!--android:paddingLeft="15dp"-->
+        <!--android:textSize="20dp" />-->
+
+
+    <!-- 个人信息设置 -->
+    <LinearLayout
+        android:id="@+id/id_llUserInfoSetting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        android:gravity="center_vertical"
+        android:background="#ffffff">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_setting_userinfo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:text="个人信息设置" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:background="#CACDD1"/>
+
+    <!-- 新消息提醒设置 -->
+    <LinearLayout
+        android:id="@+id/id_llMessageNotifySetting"
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="#ffffff">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_setting_message" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:text="消息设置" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/id_btnQuit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#ff0000"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:text="退出账号" />
+
+
+</LinearLayout>

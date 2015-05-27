@@ -12,6 +12,7 @@ public interface DAO {
     public void insertChat(ChatData chatData);
     public void deleteChat(int _id);
     public void clearChat(String phone);
+    public void clearAll();
     public List<ChatData> getChatData(String phone);
 
 }
