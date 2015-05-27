@@ -70,7 +70,6 @@ public class PollThread extends Thread {
                 String ram = object.getString("ram");
                 String num = object.getString("num");
                 String name = object.getString("name");
-                String ip = object.getString("ip");
                 Contact contact = new Contact(name, num);
                 contact.setRam(ram);
                 WantToChatManager.getInstance().addContact(contact);
