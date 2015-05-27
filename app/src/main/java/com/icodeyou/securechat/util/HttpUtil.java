@@ -32,6 +32,8 @@ public class HttpUtil {
     private static final String ADD_CONTACT = BASE_URL + "addContact.php";
     private static final String REC_CONTACT = BASE_URL + "recContact.php";
     private static final String POLL_GET = BASE_URL + "pollget.php";
+    private static final String CHANGE_INFO = BASE_URL + "changeInfo.php";
+    private static final String GET_MY_INFO = BASE_URL + "getMyInfo.php";
     //todo 还需要再定义一些常量网址
 
     private HttpUtil() {
@@ -279,7 +281,7 @@ public class HttpUtil {
 
 
     /*
-     * 各种轮询
+     * 轮询是否有好友请求和会话请求
      */
     public void pollGet(final String num, final HttpCallBackListener listener) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, POLL_GET, new Response.Listener<String>() {
@@ -304,6 +306,68 @@ public class HttpUtil {
             }
         };
         stringRequest.setTag("pollget");
+        MyApplication.getRequestQueue().add(stringRequest);
+    }
+
+
+    /*
+     * 修改用户信息
+     */
+    public void changeInfo(final String num, final String name, final String pwd, final HttpCallBackListener listener) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, CHANGE_INFO, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                DebugUtil.print("changeInfo success " + s);
+                listener.onSuccess(s);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                DebugUtil.print("changeInfo error " + volleyError.toString());
+                listener.onFail(volleyError.toString());
+            }
+        }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("num", num);
+                map.put("name", name);
+                map.put("pwd", pwd);
+                return map;
+            }
+        };
+        stringRequest.setTag("changeinfo");
+        MyApplication.getRequestQueue().add(stringRequest);
+    }
+
+
+    /*
+     * 获取用户信息
+     */
+    public void getMyInfo(final String num, final HttpCallBackListener listener) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_MY_INFO, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                DebugUtil.print("getMyInfo success " + s);
+                listener.onSuccess(s);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                DebugUtil.print("getMyInfo error " + volleyError.toString());
+                listener.onFail(volleyError.toString());
+            }
+        }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("num", num);
+                return map;
+            }
+        };
+        stringRequest.setTag("getmyinfo");
         MyApplication.getRequestQueue().add(stringRequest);
     }
 

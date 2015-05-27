@@ -1,16 +1,20 @@
 package com.icodeyou.securechat;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.icodeyou.securechat.util.HttpUtil;
+
+import org.json.JSONObject;
+
 
 
 public class SettingUserinfoActivity extends ActionBarActivity {
@@ -19,6 +23,18 @@ public class SettingUserinfoActivity extends ActionBarActivity {
     private Button mBtnOK;
 
     private String preName = "init", prePassword = "init";
+
+    private Handler getUserInfoHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String name = (String) msg.obj;
+            mEtName.setText(name);
+            mEtPassword.setText("123456");
+            preName = name;
+            prePassword = "123456";
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +52,23 @@ public class SettingUserinfoActivity extends ActionBarActivity {
      * 从网络获取用户信息
      */
     private void getUserInfo() {
-        // todo 在此模拟
-        mEtName.setText("wanghuan");
-        mEtPassword.setText("123456");
-        preName = "wanghuan";
-        prePassword = "123456";
-
-
-
+        HttpUtil.getInstance().getMyInfo(MyApplication.getMyPhone(), new HttpUtil.HttpCallBackListener() {
+            @Override
+            public void onSuccess(String info) {
+                try{
+                    JSONObject object = new JSONObject(info);
+                    String name = object.getString("name");
+                    Message msg = Message.obtain();
+                    msg.obj = name;
+                    getUserInfoHandler.sendMessage(msg);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFail(String info) {
+            }
+        });
 
         mBtnOK.setEnabled(false);
     }
@@ -58,8 +83,36 @@ public class SettingUserinfoActivity extends ActionBarActivity {
         mBtnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // todo 提交修改到网络
-//                HttpUtil.getInstance()
+                String name = mEtName.getText().toString().trim();
+                String password = mEtPassword.getText().toString().trim();
+                String phone = mEtPhone.getText().toString().trim();
+                if (!"".equals(name) && !"".equals(password) && !"".equals(phone))
+                    HttpUtil.getInstance().changeInfo(phone, name, password, new HttpUtil.HttpCallBackListener() {
+                        @Override
+                        public void onSuccess(String info) {
+                            try {
+                                JSONObject object = new JSONObject(info);
+                                int status = object.getInt("status");
+                                if (status == 0){
+                                    Toast.makeText(SettingUserinfoActivity.this, "未修改", Toast.LENGTH_SHORT).show();
+                                }
+                                if (status == 1){
+                                    Toast.makeText(SettingUserinfoActivity.this, "已修改用户名", Toast.LENGTH_SHORT).show();
+                                }
+                                if (status == 2){
+                                    Toast.makeText(SettingUserinfoActivity.this, "已修改密码", Toast.LENGTH_SHORT).show();
+                                }
+                                if (status == 3){
+                                    Toast.makeText(SettingUserinfoActivity.this, "已修改用户名和密码", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                        @Override
+                        public void onFail(String info) {
+                        }
+                    });
             }
         });
 
