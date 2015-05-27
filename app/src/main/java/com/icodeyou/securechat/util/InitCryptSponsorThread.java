@@ -63,6 +63,13 @@ public class InitCryptSponsorThread extends Thread {
 
             handler.sendEmptyMessage(0);
 
+            // 关闭连接，释放资源
+            ois.close();
+            oos.close();
+            socket.close();
+            socket = null;
+            serverSocket.close();
+            serverSocket = null;
         } catch (Exception e) {
             e.printStackTrace();
         }
