@@ -11,6 +11,7 @@ public class Contact implements Serializable{
     private String ip;
     private String number;
     private long rawContactId;
+    private String ram;
 
     public Contact(String name, String ip, String number) {
         this.name = name;
@@ -22,6 +23,7 @@ public class Contact implements Serializable{
         this.name = name;
         this.number = number;
     }
+
 
     public Contact() {
     }
@@ -62,9 +64,11 @@ public class Contact implements Serializable{
         this.rawContactId = rawContactId;
     }
 
-    @Override
-    public String toString() {
-        return "ContactBean [name=" + name + ", number=" + number
-                + ", rawContactId=" + rawContactId + "]";
+    public String getRam() {
+        return ram;
+    }
+
+    public void setRam(String ram) {
+        this.ram = ram;
     }
 }

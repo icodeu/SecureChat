@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context="com.icodeyou.securechatdemo.FriendFragment">
+
+    <!-- todo 待删除 -->
+    <!--<Button-->
+        <!--android:id="@+id/id_btnAccept"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="接受会话邀请" />-->
+
+
+    <!-- 想与你通信的好友列表 -->
+    <TextView
+        android:id="@+id/id_tvWantToChat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="想与你通信的好友"
+        android:padding="10dp"
+        android:background="#eeeeee"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@+id/id_lvWantToChat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+    <!-- 想与你通信的好友列表 -->
+
+
+    <!-- 添加好友请求列表 -->
+    <TextView
+        android:id="@+id/id_tvNewFriend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加好友请求"
+        android:visibility="gone"
+        android:background="#eeeeee"
+        android:padding="10dp" />
+
+    <ListView
+        android:id="@+id/id_lvNewFriend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+    <!-- 添加好友请求列表 -->
+
+
+    <TextView
+        android:id="@+id/id_tvContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="好友列表"
+        android:padding="10dp"
+        android:background="#eeeeee" />
+
+    <!-- 好友列表 -->
+    <ListView
+        android:id="@+id/id_lvContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+    <!-- 好友列表 -->
+
+</LinearLayout>

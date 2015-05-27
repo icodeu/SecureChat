@@ -11,6 +11,7 @@ import com.android.volley.toolbox.Volley;
 public class MyApplication extends Application{
 
     private static RequestQueue requestQueue;
+    private static String myPhone;
 
     @Override
     public void onCreate() {
@@ -20,5 +21,13 @@ public class MyApplication extends Application{
 
     public static RequestQueue getRequestQueue(){
         return requestQueue;
+    }
+
+    public static String getMyPhone() {
+        return myPhone;
+    }
+
+    public static void setMyPhone(String myPhone) {
+        MyApplication.myPhone = myPhone;
     }
 }

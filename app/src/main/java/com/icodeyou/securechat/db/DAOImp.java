@@ -43,6 +43,13 @@ public class DAOImp implements DAO {
     }
 
     @Override
+    public void clearAll() {
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        db.execSQL("delete from chat");
+        db.close();
+    }
+
+    @Override
     public List<ChatData> getChatData(String phone) {
         List<ChatData> chatDatas = new ArrayList<ChatData>();
         SQLiteDatabase db = mHelper.getWritableDatabase();

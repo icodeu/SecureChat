@@ -22,10 +22,16 @@ public class HttpUtil {
 
     private static HttpUtil httpUtil = null;
 
-    private static final String BASE_URL = "http://2.huandb.sinaapp.com/";
+    private static final String BASE_URL = "http://3.huandb.sinaapp.com/";
     private static final String SEND_MY_IP = BASE_URL + "sendMyIP.php";
     private static final String POLL_GET_IP = BASE_URL + "pollGetIP.php";
     private static final String SEND_MY_IP_RAM = BASE_URL + "sendMyIPRAM.php";
+    private static final String REGISTER = BASE_URL + "regist.php";
+    private static final String LOGIN = BASE_URL + "login.php";
+    private static final String GET_CONTACT = BASE_URL + "getContact.php";
+    private static final String ADD_CONTACT = BASE_URL + "addContact.php";
+    private static final String REC_CONTACT = BASE_URL + "recContact.php";
+    private static final String POLL_GET = BASE_URL + "pollget.php";
     //todo 还需要再定义一些常量网址
 
     private HttpUtil() {
@@ -37,7 +43,7 @@ public class HttpUtil {
         return httpUtil;
     }
 
-    public void sendMyIP(final String ip, final HttpCallBackListener listener) {
+    public void sendMyIP(final String ip, final String sponsor, final String acceptor, final HttpCallBackListener listener) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, SEND_MY_IP, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
@@ -57,6 +63,8 @@ public class HttpUtil {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("ip", ip);
+                map.put("sponsor", sponsor);
+                map.put("acceptor", acceptor);
                 return map;
             }
         };
@@ -116,6 +124,186 @@ public class HttpUtil {
             }
         };
         stringRequest.setTag("sendmyipram");
+        MyApplication.getRequestQueue().add(stringRequest);
+    }
+
+    public void register(final String num, final String name, final String pwd, final HttpCallBackListener listener) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                DebugUtil.print("register success " + s);
+                // 回调给调用函数
+                listener.onSuccess(s);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                DebugUtil.print("register error " + volleyError.toString());
+                listener.onFail(volleyError.toString());
+            }
+        }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("num", num);
+                map.put("name", name);
+                map.put("pwd", pwd);
+                return map;
+            }
+        };
+        stringRequest.setTag("register");
+        MyApplication.getRequestQueue().add(stringRequest);
+    }
+
+    /*
+     * 用户登录
+     */
+    public void login(final String num, final String pwd, final HttpCallBackListener listener) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, LOGIN, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                DebugUtil.print("login success " + s);
+                // 回调给调用函数
+                listener.onSuccess(s);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                DebugUtil.print("login error " + volleyError.toString());
+                listener.onFail(volleyError.toString());
+            }
+        }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("num", num);
+                map.put("pwd", pwd);
+                return map;
+            }
+        };
+        stringRequest.setTag("login");
+        MyApplication.getRequestQueue().add(stringRequest);
+    }
+
+    /*
+    * 获取好友列表
+    */
+    public void getContact(final String num, final HttpCallBackListener listener) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_CONTACT, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                DebugUtil.print("getContact success " + s);
+                listener.onSuccess(s);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                DebugUtil.print("getContact error " + volleyError.toString());
+                listener.onFail(volleyError.toString());
+            }
+        }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("num", num);
+                return map;
+            }
+        };
+        stringRequest.setTag("getcontact");
+        MyApplication.getRequestQueue().add(stringRequest);
+    }
+
+    /*
+    * 添加好友
+    */
+    public void addContact(final String num_src, final String num_obj, final HttpCallBackListener listener) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, ADD_CONTACT, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                DebugUtil.print("addContact success " + s);
+                listener.onSuccess(s);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                DebugUtil.print("addContact error " + volleyError.toString());
+                listener.onFail(volleyError.toString());
+            }
+        }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("num_src", num_src);
+                map.put("num_obj", num_obj);
+                return map;
+            }
+        };
+        stringRequest.setTag("addcontact");
+        MyApplication.getRequestQueue().add(stringRequest);
+    }
+
+    /*
+     * 接受添加好友请求
+     */
+    public void recContact(final String num_rec, final String num_apply, final String status, final HttpCallBackListener listener) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, REC_CONTACT, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                DebugUtil.print("recContact success " + s);
+                listener.onSuccess(s);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                DebugUtil.print("recContact error " + volleyError.toString());
+                listener.onFail(volleyError.toString());
+            }
+        }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("num_rec", num_rec);
+                map.put("num_apply", num_apply);
+                map.put("status", status);
+                return map;
+            }
+        };
+        stringRequest.setTag("reccontact");
+        MyApplication.getRequestQueue().add(stringRequest);
+    }
+
+
+    /*
+     * 各种轮询
+     */
+    public void pollGet(final String num, final HttpCallBackListener listener) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, POLL_GET, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                DebugUtil.print("pollGet success " + s);
+                listener.onSuccess(s);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                DebugUtil.print("pollGet error " + volleyError.toString());
+                listener.onFail(volleyError.toString());
+            }
+        }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("num", num);
+                return map;
+            }
+        };
+        stringRequest.setTag("pollget");
         MyApplication.getRequestQueue().add(stringRequest);
     }
 
