@@ -70,9 +70,12 @@ public class PollThread extends Thread {
                 String ram = object.getString("ram");
                 String num = object.getString("num");
                 String name = object.getString("name");
-                Contact contact = new Contact(name, num);
-                contact.setRam(ram);
-                WantToChatManager.getInstance().addContact(contact);
+                String ip = object.getString("ip");
+                if (!"".equals(ip)){
+                    Contact contact = new Contact(name, num);
+                    contact.setRam(ram);
+                    WantToChatManager.getInstance().addContact(contact);
+                }
                 isRefresh = true;
             }
             listener.onSuccess(isRefresh);
